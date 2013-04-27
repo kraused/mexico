@@ -61,13 +61,13 @@ Relevant Publications
 If you use the provided code for your research please consider
 citing the following publications:
 
-- Coupling Molecular Dynamics and Continua with Weak Constraints.
-  Konstantin Fackeldey, Dorian Krause, Rolf Krause, Christoph Lenzen.
+- *Coupling Molecular Dynamics and Continua with Weak Constraints*.  
+  Konstantin Fackeldey, Dorian Krause, Rolf Krause, Christoph Lenzen.  
   SIAM Multiscale Modeling & Simulation 2011; 9(4):1459-1494.
 
-- Parallel Scale-Transfer in Multiscale MD-FE Coupling using 
-  Remote Memory Access. 
-  Dorian Krause and Rolf Krause.
+- *Parallel Scale-Transfer in Multiscale MD-FE Coupling using 
+  Remote Memory Access.*  
+  Dorian Krause and Rolf Krause.  
   IEEE 7th International Conference on E-Science, e-Science 2011, 
   Workshop Proceedings, IEEE Computer Society (2001).
 
