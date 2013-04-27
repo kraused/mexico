@@ -1,5 +1,5 @@
  
-    *** Multiscale Execution Code (MEXICO) ***
+## Multiscale Execution Code (MEXICO)
 
 
 Table of contents
