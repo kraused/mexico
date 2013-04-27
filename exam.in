@@ -1,0 +1,24 @@
+
+! vi: tabstop=4:expandtab
+
+! Input for the log instance
+& log
+    ! the debug level between 0 and 2
+    debug = 2
+/
+
+! runtime settings, e.g., which runtime to use
+&runtime
+    ! choice of the implementation, some choices
+    ! might not be available depending on the 
+    ! configuration
+    implementation = 'MPI Alltoall'
+/
+
+! information about the job
+&job
+    ! whether or not the job performs communication
+    ! internally
+    no_comm = .TRUE.
+/
+

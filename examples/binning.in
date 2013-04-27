@@ -1,0 +1,50 @@
+
+! vi: tabstop=4:expandtab
+
+! Benchmark settings
+&binning
+    ! Number of worker in the execution. This number
+    ! should be smaller than the number of MPI processes
+    num_worker = 2,
+    ! List of worker ranks
+    worker = 0 8 16 24 32 40 48 56,
+    ! Number of cells in each spatial dimension per worker
+    ! processing element
+    num_cells = 64,
+    ! Number of particles per timestep
+    num_particles_in_cell = 32,
+    ! Number of extray payload bytes per particle.
+    num_bytes_per_particle_i = 0,
+    num_bytes_per_particle_o = 0,
+    ! Redistribution strategy:
+    ! 1 = cyclic by cells
+    ! 2 = randomly
+    redistrib_strategy = 1,
+    ! The block size for the cyclic distribution.
+    ! num_cells must be divisible by this value
+    redistrib_cyclic_blk = 1
+/
+
+! Input for the log instance
+&log
+    ! the debug level between 0 and 2
+    debug = 2
+/
+
+! runtime settings, e.g., which runtime to use
+&runtime
+    ! choice of the implementation, some choices
+    ! might not be available depending on the 
+    ! configuration
+    implementation = 'MPI Alltoall',
+    ! optimization hints
+    hints = 'coalesce'
+/
+
+! information about the job
+&job
+    ! whether or not the job performs communication
+    ! internally
+    no_comm = .TRUE.
+/
+

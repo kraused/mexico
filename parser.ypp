@@ -1,0 +1,171 @@
+%name-prefix="mexico_"
+
+%{
+
+#include "ast.hpp"
+/// Need to catch Ast out of the mexico namespace
+/// because we cannot have a pointer to mexico::Ast
+/// in the %union. Since typedefs cannot be forwarded
+/// this is curently the only solution
+using mexico::Ast;
+
+#include <string>
+#include <stdio.h>
+
+extern Ast* mexico_parser_ast;
+
+int yyerror(const char*);
+int yylex();
+
+#define YYDEBUG 1
+
+%}
+
+%union
+{
+	int ival;
+	float fval;
+	char sval[128];
+	bool bval;
+
+	struct Ast* a;
+};
+
+%token AMPERSAND COMMA SLASH EQUAL
+
+%token<ival>    NUM
+%token<fval>    FLOAT
+%token<sval>    STRING
+%token<sval>    ID
+%token<bval>    BOOL
+
+%type<a>		namelist_list namelist namelist_content namelist_stmt id lval
+
+%%
+
+content:
+	namelist_list
+	{
+		mexico_parser_ast = $1;
+	}
+;
+
+namelist_list:
+    namelist_list namelist
+	{
+        $$ = Ast::newast('L', $1, $2);
+	}
+|   namelist
+	{
+		$$ = $1;
+	}
+;
+
+namelist:
+	AMPERSAND id namelist_content namelist_delim
+	{
+		$$ = Ast::newast('&', $2, $3);
+	}
+;
+
+    // There might be a trailing comma at the end
+    // of the assignments
+namelist_delim:
+    COMMA SLASH
+|   SLASH
+    ;
+
+namelist_content:
+    namelist_content COMMA namelist_stmt
+	{
+		$$ = Ast::newast(',', $1, $3);
+	}
+|   namelist_stmt
+	{
+		$$ = $1;
+	}
+;
+
+namelist_stmt:
+	id EQUAL lval
+    {
+		$$ = Ast::newast('=', $1, $3);
+    }
+;
+
+id:
+	ID
+	{
+		$$ = Ast::newstr($1);
+	}
+;
+
+lval:
+|	STRING
+	{
+		$$ = Ast::newstr($1);
+	}
+|	NUM
+	{
+		$$ = Ast::newint($1);
+	}
+|	FLOAT
+	{
+		$$ = Ast::newfloat($1);
+	}
+|	BOOL
+	{
+		$$ = Ast::newbool($1);
+	}
+|	list
+	{
+		$$ = 0;	/// Ignore this
+	}
+;
+
+/* We will produce two reduce/reduce conflicts here but
+   since bison chooses the first matching one we are on
+   the safe side until I find a final solution for the
+   handling of lists
+ */
+
+list:
+	list list_element
+|	list_element
+	{
+	}
+;
+
+list_element:
+	NUM
+|	FLOAT
+	{
+	}
+;
+
+%%
+
+extern FILE* mexico_in;
+extern int   mexico_parse();
+extern int   mexico__scan_string(const char*);
+extern int   mexico_debug;
+
+/// Need to be globally accessible
+mexico::Ast* mexico_parser_ast;
+
+void mexico_Parser_read(mexico::Ast** ast, FILE* file)
+{
+    mexico_in = file;
+    mexico_parse();
+
+    *ast = mexico_parser_ast;
+}
+
+void mexico_Parser_read(mexico::Ast** ast, const char* file_content)
+{
+    mexico__scan_string(file_content);
+    mexico_parse();
+
+	*ast = mexico_parser_ast;
+}
+
