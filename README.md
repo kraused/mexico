@@ -28,8 +28,8 @@ Two possible ways exist:
    This should be fairly straight-forward. The script supports 
    out-of-source builds.
 
-2. Modify "mexico_config.hpp" to enable/disable GA and SHMEM. 
-   The Makefile.inc file should be modified to set the correct
+2. Modify `mexico_config.hpp` to enable/disable GA and SHMEM. 
+   The `Makefile.inc` file should be modified to set the correct
    compilers and flags. If all settings are correct, a simple
    `make` suffices.
 
