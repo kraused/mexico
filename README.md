@@ -2,15 +2,6 @@
 ## Multiscale Execution Code (MEXICO)
 
 
-Table of contents
-=================
-
- o Introduction
- o Requirements
- o Installation
- o Known Problems
-
-
 Introduction
 ============
 
@@ -33,19 +24,16 @@ Installation
 Currently no nice way for building the code are available.
 Two possible ways exist:
 
-a) Adapt one of the build/compile.[].sh script to your needs. 
+1. Adapt one of the `build/compile.[].sh` script to your needs. 
    This should be fairly straight-forward. The script supports 
    out-of-source builds.
 
-b) Modify "mexico_config.hpp" to enable/disable GA and SHMEM. 
+2. Modify "mexico_config.hpp" to enable/disable GA and SHMEM. 
    The Makefile.inc file should be modified to set the correct
    compilers and flags. If all settings are correct, a simple
+   `make` suffices.
 
-% make
-
-   should suffice.
-
-In both cases the library "libmexico.a" is build along with
+In both cases the library `libmexico.a` is build along with
 the binning benchmark.
 
 
