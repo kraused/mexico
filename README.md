@@ -46,7 +46,7 @@ No known bugs so far.
 Relevant Publications
 =====================
 
-If you use the provided code for your research please consider
+If you use the provided code for your research, please consider
 citing the following publications:
 
 - *Coupling Molecular Dynamics and Continua with Weak Constraints*.  
